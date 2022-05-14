@@ -1,4 +1,4 @@
-## refugees_house_prices.R
+## refugees_communities.R
 ## Play around with refugee resettlement data to explore effect of housing prices on refugee
 ## locations and outcomes.
 ## Requires: orr_prm_1975_2018_v1.dta
