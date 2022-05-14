@@ -8,7 +8,7 @@ library(tidyverse)
 library(haven)
 library(usmap)
 
-setwd("C:/Users/trode/OneDrive/Desktop/immigration-research/refugees_house_prices/")
+setwd("C:/Users/trode/OneDrive/Desktop/immigration-research/ethnic_communities_imm_outcomes/")
 
 ## refugee resettlement geocoded data
 data <- read_dta('data/orr_prm_1975_2018_v1.dta')
@@ -31,13 +31,13 @@ plot_usmap(regions = "counties", data = locations, values = "logcount") +
   theme(legend.position="none") + theme(plot.subtitle = element_text(hjust = 0.5, size = 12, face = "italic")) + 
   theme(panel.border = element_rect(color="black", fill=NA, size=1, linetype="solid"))
 
-p <- ggsave("charts/locations_counties_log_all.png", plot = p, 
-            width = 24, height = 16, units = "cm")
+#p <- ggsave("charts/locations_counties_log_all.png", plot = p, 
+#            width = 24, height = 16, units = "cm")
 
 
-## vietnamese refugees
+## vietnamese refugees - example
 viet <- data %>%
-  filter(citizenship_stable=="vietnam", year==2018) %>%
+  filter(citizenship_stable=="vietnam") %>%
   group_by(fips) %>%
   summarize(count=sum(refugees)) %>% 
   mutate(logcount=log(count)) %>%
@@ -51,4 +51,9 @@ plot_usmap(regions = "counties", data = viet, values = "logcount") +
   theme(plot.title = element_text(face = "bold", size = 22, hjust = 0.5)) + 
   theme(legend.position="none") + theme(plot.subtitle = element_text(hjust = 0.5, size = 12, face = "italic")) + 
   theme(panel.border = element_rect(color="black", fill=NA, size=1, linetype="solid"))
+
+
+## individual level refugee data part 1
+refugee_pt1_data <- read_dta('data/ORR_1975_2008_Indv_v1_compressed_pt_I.dta')
+
 
