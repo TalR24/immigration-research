@@ -24,7 +24,7 @@ hist(locations$logcount[locations$logcount>0])
 
 plot_usmap(regions = "counties", data = locations, values = "logcount") +
   scale_fill_distiller(palette = "Reds", direction = 1, na.value="white") + 
-  labs(title = "Locations of Refugees, 1975-2018", subtitle = "Among those who arrived to the US in 2006-2019") + 
+  labs(title = "Locations of Refugees, 1975-2018") + 
   theme_classic() + theme(axis.line = element_blank()) + 
   theme(axis.title = element_blank()) + theme(axis.ticks = element_blank()) + theme(axis.text = element_blank()) + 
   theme(plot.title = element_text(face = "bold", size = 22, hjust = 0.5)) + 
@@ -33,3 +33,22 @@ plot_usmap(regions = "counties", data = locations, values = "logcount") +
 
 p <- ggsave("charts/locations_counties_log_all.png", plot = p, 
             width = 24, height = 16, units = "cm")
+
+
+## vietnamese refugees
+viet <- data %>%
+  filter(citizenship_stable=="vietnam", year==2018) %>%
+  group_by(fips) %>%
+  summarize(count=sum(refugees)) %>% 
+  mutate(logcount=log(count)) %>%
+  subset(nchar(fips) == 5)
+  
+plot_usmap(regions = "counties", data = viet, values = "logcount") +
+  scale_fill_distiller(palette = "Reds", direction = 1, na.value="white") + 
+  labs(title = "Locations of Vietnamese Refugees, 1975-2018") + 
+  theme_classic() + theme(axis.line = element_blank()) + 
+  theme(axis.title = element_blank()) + theme(axis.ticks = element_blank()) + theme(axis.text = element_blank()) + 
+  theme(plot.title = element_text(face = "bold", size = 22, hjust = 0.5)) + 
+  theme(legend.position="none") + theme(plot.subtitle = element_text(hjust = 0.5, size = 12, face = "italic")) + 
+  theme(panel.border = element_rect(color="black", fill=NA, size=1, linetype="solid"))
+
