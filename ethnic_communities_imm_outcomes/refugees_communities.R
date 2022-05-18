@@ -56,4 +56,13 @@ plot_usmap(regions = "counties", data = viet, values = "logcount") +
 ## individual level refugee data part 1
 refugee_pt1_data <- read_dta('data/ORR_1975_2008_Indv_v1_compressed_pt_I.dta')
 
+## do refugees placed in the various cities and of various ethnicities have the same observables on average?
+
+rfdta <- refugee_pt1_data %>%
+  group_by(county_fips, state_fips, citizenship_stable) %>%
+  summarize(count=n(), avg_arrival_year=mean(year), avg_birth_year=mean(birth_year),
+            male_count=sum(sex=="male"), married_count=sum(marital_status=="single")) %>%
+  filter(county_fips==.)
+  
+
 
